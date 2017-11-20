@@ -1,11 +1,10 @@
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Banca {
     private String IBAN;
     private HashMap<String, ContoInterface> conti;
-   /* private String tipo1="Conto Corrente";
-    private String tipo2="Conto Web";
-    private String tipo3="Conto Deposito";*/
     private int contiAttivi;
     public Banca(String IBAN) {
         this.IBAN = IBAN;
@@ -43,7 +42,7 @@ public class Banca {
 
     public boolean changePasswordCw(String iban,String oldPass,String newPass){
         if(conti.containsKey(iban) && (conti.get(iban) instanceof ContoWeb && oldPass.equals(((ContoWeb) conti.get(iban)).getPassMem()))){
-            return ((ContoWeb) conti.get(iban)).changePassword(newPass);
+            return ((ContoWeb) conti.get(iban)).changePassword(oldPass,newPass);
         }
          return false;
 
@@ -54,5 +53,22 @@ public class Banca {
         }
         return false;
 
+    }
+    public boolean addAccountable(String iban,Accountable accountable){
+        if(conti.containsKey(iban)){
+            ((Conto)conti.get(iban)).addAccountable(accountable);
+            return true;
+        }
+        else return false;
+
+    }
+    public void setMese(){
+        Set list  = conti.keySet();
+        Iterator i=list.iterator();
+        while(i.hasNext()) {
+            String key = (String) i.next();
+            ContoInterface value = conti.get(key);
+            System.out.println(((Conto)value).fineMese());
+        }
     }
 }

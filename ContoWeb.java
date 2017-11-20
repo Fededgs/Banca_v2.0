@@ -13,10 +13,14 @@ public class ContoWeb extends Conto {
         id=false;
     }
 
-    public boolean changePassword(String password){
-        passMem=password;
+    public boolean changePassword(String oldPass,String newPass){
+        if(oldPass.equals(passMem)){
+        passMem=newPass;
         firstlogin=true;
+        id=false;
         return true;
+        }
+        else return false;
     }
 
     public boolean identificazione(String password){
@@ -27,27 +31,4 @@ public class ContoWeb extends Conto {
 
         return false;
     }
-
-
-
-
-
-  /*  public boolean preleva(double importo) {
-        if (importo > 0) return false;
-            if (identif && (importo < 0) && (-importo < saldo)) {
-                saldo += importo;
-                return true;
-            }
-        return false;
-        }
-    
-    public boolean changePassword(String passVecchia,String passNuova){
-        if(passVecchia.equals(passMem)){
-            passMem=passNuova;
-            return true;
-        }
-        else return false;
-    }
-
-*/
 }

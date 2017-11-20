@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Conto implements ContoInterface{
 
 
@@ -13,6 +15,7 @@ public abstract class Conto implements ContoInterface{
         return iban;
     }
 
+    private ArrayList<Accountable> totAccount;
     private String iban;
     protected double saldo;
     private String cf;
@@ -23,9 +26,13 @@ public abstract class Conto implements ContoInterface{
         this.cf=cf;
         saldo=0;
         id=true;
-
+        totAccount=new ArrayList<>();
     }
 
+    public void addAccountable(Accountable accountable){
+        totAccount.add(accountable);
+
+    }
     public boolean operazione(double importo){
         if(id) {
             if (importo >= 0) {
@@ -41,6 +48,26 @@ public abstract class Conto implements ContoInterface{
     }
     public void printConto(){
         if(id)System.out.println("iban: "+iban+"  cf: "+cf+"  saldo: "+saldo);
-        else System.out.println("Identificazione non avvenuta");
+        else System.out.println("ERROR(printConto): Identificazione non avvenuta");
+    }
+    public boolean fineMese(){
+        double totAdd=0,totAcc=0;
+
+        for(Accountable a:totAccount) {
+            switch (a.getType()) {
+                case ACCREDITO:
+                    totAcc += a.getImport();
+                break;
+                case ADDEBITO:
+                    totAdd += a.getImport();
+                    break;
+            }
+        }
+
+        if(saldo+totAcc>=-totAdd){
+            saldo+=totAdd+totAcc;
+            return true;
+            }
+        else return false;
     }
 }
