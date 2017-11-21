@@ -62,7 +62,7 @@ public class Banca {
         else return false;
 
     }
-    public void setMese(){
+    public void fineMese(){
         Set list  = conti.keySet();
         Iterator i=list.iterator();
         while(i.hasNext()) {

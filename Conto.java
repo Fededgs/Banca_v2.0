@@ -39,7 +39,7 @@ public abstract class Conto implements ContoInterface{
                 saldo += importo;
                 return true;
             }
-            if (importo < 0 && -importo < saldo) {
+            if (importo < 0 && -importo <= saldo) {
                 saldo += importo;
                 return true;
             }
@@ -63,11 +63,8 @@ public abstract class Conto implements ContoInterface{
                     break;
             }
         }
-
-        if(saldo+totAcc>=-totAdd){
-            saldo+=totAdd+totAcc;
-            return true;
-            }
+        operazione(totAcc);
+        if(operazione(totAdd)) return true;
         else return false;
     }
 }
